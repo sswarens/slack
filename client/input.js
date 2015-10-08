@@ -1,11 +1,14 @@
 Template.footer.events({
-  'keypress input': function(e) {
+  'keypress input': function (e) {
     var inputVal = $('.input-box_text').val();
-    if(!!inputVal) {
+    if (!!inputVal) {
       var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
       if (charCode == 13) {
         e.stopPropagation();
-        Messages.insert({text: $('.input-box_text').val()});
+        Meteor.call('newMessage', {
+          text: $('.input-box_text').val(),
+          channel: Session.get('channel')
+        });
         $('.input-box_text').val("");
         return false;
       }
